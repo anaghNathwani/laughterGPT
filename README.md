@@ -1,6 +1,27 @@
-# 3D Model Generator
+# RenderBender — 3D Model Generator
 
-Text-to-3D mesh generation with a GUI. Generates meshes from text prompts using a hybrid analytic SDF + neural OccupancyNetwork pipeline. Supports training on open-source datasets.
+Text-to-3D mesh generation with a **React web UI**. Generates meshes from text prompts using a hybrid analytic SDF + neural OccupancyNetwork pipeline. Supports animations and training on open-source datasets.
+
+## Web UI (React + FastAPI)
+
+```bash
+# 1. Install Python deps
+pip install -r requirements.txt
+
+# 2. Install JS deps and start the dev server
+cd web && npm install && npm run dev
+
+# 3. Start the backend (in a separate terminal, from the repo root)
+uvicorn server:app --reload --port 8000
+```
+
+Then open **http://localhost:5173** in your browser.
+
+To build for production (served directly by the backend):
+```bash
+cd web && npm run build
+uvicorn server:app --port 8000   # serves web/dist automatically
+```
 
 ## Install
 
@@ -35,6 +56,23 @@ python main.py --prompt "mountain terrain"        --output terrain.glb
 | `.off` | ✓ | ✓ |
 | `.blend`| ✓ | — |
 | `.fbx` | ✓ | — |
+
+## Animations
+
+The web UI has a full animation panel. Select an animation type, adjust speed, press ▶:
+
+| Type | Description |
+|------|-------------|
+| **Spin** | Constant Y-axis rotation |
+| **Float** | Sine-wave vertical drift |
+| **Pulse** | Breathe in/out (uniform scale) |
+| **Bounce** | Elastic bounce |
+| **Wobble** | Random-axis rotation |
+| **Wave** | Per-vertex sine displacement |
+| **Spin+Float** | Combined spin and float |
+| **Morph** | SDF-interpolated shape transition to a second prompt |
+
+Export any animation as a `.glb` file with embedded animation tracks via the **Export animated .glb** button.
 
 ## Prompt grammar
 
